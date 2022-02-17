@@ -1,19 +1,22 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+
+import data from "../data/data.json";
 
 export default function HomeScreen({ navigation }: NativeStackHeaderProps) {
-  useEffect(() => {
-    console.log("Rendering Home Screen");
-    return () => console.log("Unmounting Home Screen");
-  }, []);
   return (
-    <View>
-      <Text>HomeScreen</Text>
-      <Button
-        title="Go to Planner"
-        onPress={() => navigation.navigate("Planner")}
-      ></Button>
+    <View style={styles.container}>
+      <Text style={styles.title}>HomeScreen</Text>
+      <Text>{JSON.stringify(data)}</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  title: {
+    textAlign: "center",
+  },
+});
