@@ -1,19 +1,14 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Button } from "react-native";
 import React from "react";
 
-export default function PlannerScreen() {
+export default function PlannerScreen({ navigation }: any) {
   return (
     <View>
       <Text>PlannerScreen</Text>
+      <Button
+        title="Go to Home"
+        onPress={() => navigation.push("Home")}
+      ></Button>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
