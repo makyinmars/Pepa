@@ -4,11 +4,12 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import data from "../data/data.json";
 import { Workout } from "../types/data";
 import WorkoutItem from "../components/WorkoutItem";
+import NotosansText from "../components/styled/Notosans";
 
 export default function HomeScreen({ navigation }: NativeStackHeaderProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>New Workouts</Text>
+      <NotosansText style={styles.title}>New Workouts</NotosansText>
       <FlatList
         data={data as [Workout]}
         renderItem={WorkoutItem}
@@ -28,6 +29,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginBottom: 10,
-    fontFamily: "notosans-bold",
   },
 });
