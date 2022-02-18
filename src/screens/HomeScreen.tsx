@@ -3,22 +3,14 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
 import data from "../data/data.json";
 import { Workout } from "../types/data";
+import WorkoutItem from "../components/WorkoutItem";
 
 export default function HomeScreen({ navigation }: NativeStackHeaderProps) {
-  const renderItem = ({ item }: { item: Workout }) => {
-    return (
-      <View>
-        <Text>{item.name}</Text>
-        <Text>{item.difficulty}</Text>
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <FlatList
         data={data as [Workout]}
-        renderItem={renderItem}
+        renderItem={WorkoutItem}
         keyExtractor={(item) => item.slug}
       />
     </View>
