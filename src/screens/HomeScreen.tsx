@@ -21,7 +21,4 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
   },
-  title: {
-    textAlign: "center",
-  },
 });
