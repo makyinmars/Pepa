@@ -9,8 +9,8 @@ export default function useCachedResources() {
     const loadResourcesAndDataAsync = async () => {
       try {
         await Font.loadAsync({
-          oswald: require("../../assets/fonts/Oswald-Regular.ttf"),
-          "oswald-bold": require("../../assets/fonts/Oswald-Bold.ttf"),
+          notosans: require("../../assets/fonts/NotoSans-Regular.ttf"),
+          "notosans-bold": require("../../assets/fonts/NotoSans-Bold.ttf"),
         });
       } catch (error) {
         console.warn(error);

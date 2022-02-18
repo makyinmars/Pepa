@@ -25,9 +25,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     fontWeight: "bold",
+    fontFamily: "notosans-bold",
   },
   duration: {
     fontSize: 15,
+    fontFamily: "notosans",
   },
-  difficulty: { fontSize: 15 },
+  difficulty: { fontSize: 15, fontFamily: "notosans" },
 });

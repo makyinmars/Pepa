@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginBottom: 10,
+    fontFamily: "notosans-bold",
   },
 });
