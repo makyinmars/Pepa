@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import * as Font from "expo-font";
-import { getData, storeData } from "../storage";
+import { getData, storeData, containsKey } from "../storage";
 import data from "../data/data.json";
 
 export default function useCachedResources() {
@@ -10,7 +10,11 @@ export default function useCachedResources() {
   useEffect(() => {
     const loadResourcesAndDataAsync = async () => {
       try {
-        await storeData("workout-data", data);
+        const hasWorkouts = await containsKey("workout-data");
+        if (!hasWorkouts) {
+          console.log("Storing data");
+          await storeData("workout-data", data);
+        }
         await Font.loadAsync({
           notosans: require("../../assets/fonts/NotoSans-Regular.ttf"),
           "notosans-bold": require("../../assets/fonts/NotoSans-Bold.ttf"),
