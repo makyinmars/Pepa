@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 import * as Font from "expo-font";
+import { getData, storeData } from "../storage";
+import data from "../data/data.json";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
@@ -8,6 +10,7 @@ export default function useCachedResources() {
   useEffect(() => {
     const loadResourcesAndDataAsync = async () => {
       try {
+        await storeData("workout-data", data);
         await Font.loadAsync({
           notosans: require("../../assets/fonts/NotoSans-Regular.ttf"),
           "notosans-bold": require("../../assets/fonts/NotoSans-Bold.ttf"),
@@ -15,6 +18,8 @@ export default function useCachedResources() {
       } catch (error) {
         console.warn(error);
       } finally {
+        const workouts = await getData("workout-data");
+        console.log(workouts);
         setIsLoadingComplete(true);
       }
     };
