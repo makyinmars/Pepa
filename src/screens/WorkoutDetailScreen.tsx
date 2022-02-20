@@ -1,5 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+
+import PressableText from "../components/styled/PressableText";
 import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
 
 type DetailsParams = {
@@ -22,6 +24,10 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{workout.name}</Text>
+      <PressableText
+        text="Check Sequence"
+        onPress={() => alert("Hello There")}
+      />
     </View>
   );
 }
