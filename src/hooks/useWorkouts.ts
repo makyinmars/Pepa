@@ -10,7 +10,6 @@ export const useWorkouts = () => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log("Getting data");
       const workouts = await getWorkouts();
       setWorkouts(workouts);
     };

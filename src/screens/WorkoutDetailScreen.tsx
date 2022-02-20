@@ -1,5 +1,8 @@
 import { View, Text, StyleSheet } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import { useEffect, useState } from "react";
+import { getWorkout } from "../storage/workout";
+import { Workout } from "../types/data";
 
 type DetailsParams = {
   route: {
@@ -12,6 +15,13 @@ type DetailsParams = {
 type Navigation = NativeStackHeaderProps & DetailsParams;
 
 export default function WorkoutDetailScreen({ route }: Navigation) {
+  useEffect(() => {
+    const getData = async () => {
+      const workout = await getWorkout(route.params.slug);
+    };
+    getData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Slug - {route.params.slug} </Text>
