@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Modal } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
 import PressableText from "../components/styled/PressableText";
@@ -28,6 +28,9 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
         text="Check Sequence"
         onPress={() => alert("Hello There")}
       />
+      <Modal visible={false} transparent={true} animationType="none">
+        <Text>Hello</Text>
+      </Modal>
     </View>
   );
 }
