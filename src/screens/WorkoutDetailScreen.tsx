@@ -31,8 +31,13 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
         onPress={() => setIsModalVisible(true)}
       />
       <Modal visible={isModalVisible} transparent={false} animationType="fade">
-        <Text style={{ marginBottom: 100 }}>Hello</Text>
-        <PressableText text="Close" onPress={() => setIsModalVisible(false)} />
+        <View style={styles.modalView}>
+          <Text>Hello</Text>
+          <PressableText
+            text="Close"
+            onPress={() => setIsModalVisible(false)}
+          />
+        </View>
       </Modal>
     </View>
   );
@@ -49,5 +54,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 10,
     fontFamily: "notosans-bold",
+  },
+  modalView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
