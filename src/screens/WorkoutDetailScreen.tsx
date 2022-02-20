@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
@@ -15,6 +16,7 @@ type DetailsParams = {
 type Navigation = NativeStackHeaderProps & DetailsParams;
 
 export default function WorkoutDetailScreen({ route }: Navigation) {
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const workout = useWorkoutBySlug(route.params.slug);
 
   if (!workout) {
@@ -26,10 +28,11 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
       <Text style={styles.title}>{workout.name}</Text>
       <PressableText
         text="Check Sequence"
-        onPress={() => alert("Hello There")}
+        onPress={() => setIsModalVisible(true)}
       />
-      <Modal visible={false} transparent={true} animationType="none">
-        <Text>Hello</Text>
+      <Modal visible={isModalVisible} transparent={false} animationType="fade">
+        <Text style={{ marginBottom: 100 }}>Hello</Text>
+        <PressableText text="Close" onPress={() => setIsModalVisible(false)} />
       </Modal>
     </View>
   );
