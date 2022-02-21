@@ -29,13 +29,17 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
         activator={({ handleOpen }) => (
           <PressableText text="Check Sequence" onPress={handleOpen} />
         )}
-      />
-      <Modal />
+      >
+        <Text>Hello there</Text>
+      </Modal>
+
       <Modal
         activator={({ handleOpen }) => (
           <Button onPress={handleOpen} title="Custom button" />
         )}
-      />
+      >
+        <Text>Hi Franklin</Text>
+      </Modal>
     </View>
   );
 }

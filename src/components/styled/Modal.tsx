@@ -5,9 +5,10 @@ import PressableText from "./PressableText";
 
 type ModalProps = {
   activator?: FunctionComponent<{ handleOpen: () => void }>;
+  children: React.ReactNode;
 };
 
-export default function Modal({ activator: Activator }: ModalProps) {
+export default function Modal({ activator: Activator, children }: ModalProps) {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   return (
@@ -18,7 +19,7 @@ export default function Modal({ activator: Activator }: ModalProps) {
         animationType="fade"
       >
         <View style={styles.modalView}>
-          <Text>Hello</Text>
+          {children}
           <PressableText
             text="Close"
             onPress={() => setIsModalVisible(false)}
