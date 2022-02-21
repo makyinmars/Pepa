@@ -4,6 +4,7 @@ import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
 import Modal from "../components/styled/Modal";
 import PressableText from "../components/styled/PressableText";
+import { formatTime } from "../utils/time";
 
 type DetailsParams = {
   route: {
@@ -30,15 +31,14 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
           <PressableText text="Check Sequence" onPress={handleOpen} />
         )}
       >
-        <Text>Hello there</Text>
-      </Modal>
-
-      <Modal
-        activator={({ handleOpen }) => (
-          <Button onPress={handleOpen} title="Custom button" />
-        )}
-      >
-        <Text>Hi Franklin</Text>
+        <View>
+          {workout.sequence.map((exercise, index) => (
+            <View key={index}>
+              <Text>{exercise.name}</Text>
+              <Text>{formatTime(exercise.duration)}</Text>
+            </View>
+          ))}
+        </View>
       </Modal>
     </View>
   );
