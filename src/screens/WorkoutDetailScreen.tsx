@@ -1,8 +1,9 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
 
 import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
 import Modal from "../components/styled/Modal";
+import PressableText from "../components/styled/PressableText";
 
 type DetailsParams = {
   route: {
@@ -24,11 +25,17 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{workout.name}</Text>
+      <Modal
+        activator={({ handleOpen }) => (
+          <PressableText text="Check Sequence" onPress={handleOpen} />
+        )}
+      />
       <Modal />
-      {/* <PressableText
-        text="Check Sequence"
-        onPress={() => setIsModalVisible(true)}
-      /> */}
+      <Modal
+        activator={({ handleOpen }) => (
+          <Button onPress={handleOpen} title="Custom button" />
+        )}
+      />
     </View>
   );
 }

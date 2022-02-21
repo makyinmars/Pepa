@@ -1,9 +1,13 @@
 import { View, Text, Modal as ReactModal, StyleSheet } from "react-native";
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 
 import PressableText from "./PressableText";
 
-export default function Modal() {
+type ModalProps = {
+  activator?: FunctionComponent<{ handleOpen: () => void }>;
+};
+
+export default function Modal({ activator: Activator }: ModalProps) {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   return (
@@ -21,11 +25,11 @@ export default function Modal() {
           />
         </View>
       </ReactModal>
-
-      <PressableText
-        text="Check Sequence"
-        onPress={() => setIsModalVisible(true)}
-      />
+      {Activator ? (
+        <Activator handleOpen={() => setIsModalVisible(true)} />
+      ) : (
+        <PressableText text="Open" onPress={() => setIsModalVisible(true)} />
+      )}
     </>
   );
 }
