@@ -13,5 +13,8 @@ export default function PressableText(
 const styles = StyleSheet.create({
   checkSequence: {
     textDecorationLine: "underline",
+    textAlign: "center",
+    fontFamily: "notosans-bold",
+    marginTop: 3,
   },
 });
