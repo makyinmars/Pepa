@@ -9,6 +9,7 @@ import { formatTime } from "../utils/time";
 import { FontAwesome } from "@expo/vector-icons";
 import WorkoutItem from "../components/WorkoutItem";
 import { SequenceItem } from "../types/data";
+import useCountdown from "../hooks/useCountdown";
 
 type DetailsParams = {
   route: {
@@ -22,8 +23,12 @@ type Navigation = NativeStackHeaderProps & DetailsParams;
 
 export default function WorkoutDetailScreen({ route }: Navigation) {
   const [sequence, setSequence] = useState<SequenceItem[]>([]);
-  const [countdown, setCountdown] = useState<number>(-1);
   const [tackerIndex, setTrackerIndex] = useState<number>(-1);
+
+  const countdown = useCountdown(
+    tackerIndex,
+    tackerIndex >= 0 ? sequence[tackerIndex].duration : -1
+  );
 
   const workout = useWorkoutBySlug(route.params.slug);
 
@@ -31,23 +36,6 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
     setSequence([...sequence, workout!.sequence[index]]);
     setTrackerIndex(index);
   };
-
-  useEffect(() => {
-    if (tackerIndex === -1) {
-      return;
-    }
-
-    setCountdown(workout!.sequence[tackerIndex].duration);
-
-    const intervalId = window.setInterval(() => {
-      setCountdown((count) => {
-        console.log(count);
-        return count - 1;
-      });
-    }, 1000);
-
-    return () => window.clearInterval(intervalId);
-  }, [tackerIndex, workout]);
 
   if (!workout) {
     return null;
