@@ -49,6 +49,9 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
           </View>
         </Modal>
       </WorkoutItem>
+      <View style={styles.playIcon}>
+        <FontAwesome name="play-circle-o" size={80} />
+      </View>
     </View>
   );
 }
@@ -66,6 +69,9 @@ const styles = StyleSheet.create({
     fontFamily: "notosans-bold",
   },
   sequenceItem: {
+    alignItems: "center",
+  },
+  playIcon: {
     alignItems: "center",
   },
 });
