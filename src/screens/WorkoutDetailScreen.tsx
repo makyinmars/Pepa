@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
 import Modal from "../components/styled/Modal";
 import PressableText from "../components/styled/PressableText";
 import { formatTime } from "../utils/time";
-import { FontAwesome } from "@expo/vector-icons";
 import WorkoutItem from "../components/WorkoutItem";
 import { SequenceItem } from "../types/data";
-import useCountdown from "../hooks/useCountdown";
+import { useCountdown } from "../hooks/useCountdown";
 
 type DetailsParams = {
   route: {
@@ -29,6 +29,8 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
     tackerIndex,
     tackerIndex >= 0 ? sequence[tackerIndex].duration : -1
   );
+
+  console.log(countdown);
 
   const workout = useWorkoutBySlug(route.params.slug);
 
