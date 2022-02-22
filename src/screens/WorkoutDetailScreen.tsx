@@ -5,6 +5,7 @@ import { useWorkoutBySlug } from "../hooks/useWorkoutBySlug";
 import Modal from "../components/styled/Modal";
 import PressableText from "../components/styled/PressableText";
 import { formatTime } from "../utils/time";
+import { FontAwesome } from "@expo/vector-icons";
 
 type DetailsParams = {
   route: {
@@ -32,10 +33,15 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
         )}
       >
         <View>
-          {workout.sequence.map((exercise, index) => (
-            <View key={index}>
-              <Text>{exercise.name}</Text>
-              <Text>{formatTime(exercise.duration)}</Text>
+          {workout.sequence.map((sequence, index) => (
+            <View key={index} style={styles.sequenceItem}>
+              <Text>
+                {sequence.name} | {formatTime(sequence.duration)} |{" "}
+                {sequence.reps} reps
+              </Text>
+              {index !== workout.sequence.length - 1 && (
+                <FontAwesome name="arrow-down" size={20} />
+              )}
             </View>
           ))}
         </View>
@@ -56,9 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontFamily: "notosans-bold",
   },
-  modalView: {
-    flex: 1,
-    justifyContent: "center",
+  sequenceItem: {
     alignItems: "center",
   },
 });
