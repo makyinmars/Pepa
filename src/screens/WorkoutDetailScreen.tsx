@@ -23,20 +23,20 @@ type Navigation = NativeStackHeaderProps & DetailsParams;
 
 export default function WorkoutDetailScreen({ route }: Navigation) {
   const [sequence, setSequence] = useState<SequenceItem[]>([]);
-  const [tackerIndex, setTrackerIndex] = useState<number>(-1);
+  const [trackerIndex, setTrackerIndex] = useState<number>(-1);
 
   const countdown = useCountdown(
-    tackerIndex,
-    tackerIndex >= 0 ? sequence[tackerIndex].duration : -1
+    trackerIndex,
+    trackerIndex >= 0 ? sequence[trackerIndex].duration : -1
   );
 
   useEffect(() => {
     console.log(countdown);
     if (!workout) return;
-    if (tackerIndex === workout.sequence.length - 1) return;
+    if (trackerIndex === workout.sequence.length - 1) return;
 
     if (countdown === 0) {
-      addItemToSequence(tackerIndex + 1);
+      addItemToSequence(trackerIndex + 1);
     }
   }, [countdown]);
 
@@ -50,6 +50,9 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   if (!workout) {
     return null;
   }
+
+  const hasReachedEnd =
+    sequence.length === workout.sequence.length && countdown === 0;
 
   return (
     <View style={styles.container}>
@@ -89,6 +92,15 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
           </View>
         )}
       </View>
+      <View>
+        <Text style={styles.conditionalText}>
+          {sequence.length === 0
+            ? "Prepare"
+            : hasReachedEnd
+            ? "Great Work!"
+            : sequence[trackerIndex].name}
+        </Text>
+      </View>
     </View>
   );
 }
@@ -114,5 +126,11 @@ const styles = StyleSheet.create({
   countdown: {
     fontFamily: "notosans-bold",
     fontSize: 30,
+  },
+  conditionalText: {
+    fontFamily: "notosans",
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 10,
   },
 });
