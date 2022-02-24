@@ -38,7 +38,13 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   const workout = useWorkoutBySlug(route.params.slug);
 
   const addItemToSequence = (index: number) => {
-    const newSequence = [...sequence, workout!.sequence[index]];
+    let newSequence = [];
+
+    if (index > 0) {
+      newSequence = [...sequence, workout!.sequence[index]];
+    } else {
+      newSequence = [workout!.sequence[index]];
+    }
     setSequence(newSequence);
     setTrackerIndex(index);
     start(newSequence[index].duration);
@@ -90,8 +96,10 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
             size={80}
             onPress={() => {
               if (hasReachedEnd) {
-                console.log("RESTART COUNTER");
-              } else start(countdown);
+                addItemToSequence(0);
+              } else {
+                start(countdown);
+              }
             }}
           />
         )}
