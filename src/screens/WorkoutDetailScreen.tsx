@@ -25,7 +25,7 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   const [sequence, setSequence] = useState<SequenceItem[]>([]);
   const [trackerIndex, setTrackerIndex] = useState<number>(-1);
 
-  const { countdown, start } = useCountdown(trackerIndex);
+  const { countdown, start, stop, isRunning } = useCountdown(trackerIndex);
 
   useEffect(() => {
     if (!workout) return;
@@ -76,11 +76,23 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
         </Modal>
       </WorkoutItem>
       <View style={styles.playIcon}>
-        {sequence.length === 0 && (
+        {sequence.length === 0 ? (
           <FontAwesome
             name="play-circle-o"
             size={80}
             onPress={() => addItemToSequence(0)}
+          />
+        ) : isRunning ? (
+          <FontAwesome name="stop-circle-o" size={80} onPress={() => stop()} />
+        ) : (
+          <FontAwesome
+            name="play-circle-o"
+            size={80}
+            onPress={() => {
+              if (hasReachedEnd) {
+                console.log("RESTART COUNTER");
+              } else start(countdown);
+            }}
           />
         )}
         {sequence.length > 0 && countdown >= 0 && (
