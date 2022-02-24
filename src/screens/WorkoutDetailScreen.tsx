@@ -24,8 +24,9 @@ type Navigation = NativeStackHeaderProps & DetailsParams;
 export default function WorkoutDetailScreen({ route }: Navigation) {
   const [sequence, setSequence] = useState<SequenceItem[]>([]);
   const [trackerIndex, setTrackerIndex] = useState<number>(-1);
-
   const { countdown, start, stop, isRunning } = useCountdown(trackerIndex);
+
+  const startupSequence = ["Ready", "Set", "Go!"].reverse();
 
   useEffect(() => {
     if (!workout) return;
@@ -47,7 +48,7 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
     }
     setSequence(newSequence);
     setTrackerIndex(index);
-    start(newSequence[index].duration);
+    start(newSequence[index].duration + startupSequence.length);
   };
 
   if (!workout) {
@@ -59,7 +60,6 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{workout.name}</Text>
       <WorkoutItem item={workout}>
         <Modal
           activator={({ handleOpen }) => (
@@ -81,42 +81,54 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
           </View>
         </Modal>
       </WorkoutItem>
-      <View style={styles.playIcon}>
-        {sequence.length === 0 ? (
-          <FontAwesome
-            name="play-circle-o"
-            size={80}
-            onPress={() => addItemToSequence(0)}
-          />
-        ) : isRunning ? (
-          <FontAwesome name="stop-circle-o" size={80} onPress={() => stop()} />
-        ) : (
-          <FontAwesome
-            name="play-circle-o"
-            size={80}
-            onPress={() => {
-              if (hasReachedEnd) {
-                addItemToSequence(0);
-              } else {
-                start(countdown);
-              }
-            }}
-          />
-        )}
-        {sequence.length > 0 && countdown >= 0 && (
-          <View>
-            <Text style={styles.countdown}>{countdown}</Text>
-          </View>
-        )}
-      </View>
-      <View>
-        <Text style={styles.conditionalText}>
-          {sequence.length === 0
-            ? "Prepare"
-            : hasReachedEnd
-            ? "Great Work!"
-            : sequence[trackerIndex].name}
-        </Text>
+      <View style={styles.workoutContainer}>
+        <View style={styles.playIcon}>
+          {sequence.length === 0 ? (
+            <FontAwesome
+              name="play-circle-o"
+              size={80}
+              onPress={() => addItemToSequence(0)}
+            />
+          ) : isRunning ? (
+            <FontAwesome
+              name="stop-circle-o"
+              size={80}
+              onPress={() => stop()}
+            />
+          ) : (
+            <FontAwesome
+              name="play-circle-o"
+              size={80}
+              onPress={() => {
+                if (hasReachedEnd) {
+                  addItemToSequence(0);
+                } else {
+                  start(countdown);
+                }
+              }}
+            />
+          )}
+          {sequence.length > 0 && countdown >= 0 && (
+            <View>
+              <Text style={styles.countdown}>
+                {countdown > sequence[trackerIndex].duration
+                  ? startupSequence[
+                      countdown - sequence[trackerIndex].duration - 1
+                    ]
+                  : countdown}
+              </Text>
+            </View>
+          )}
+        </View>
+        <View>
+          <Text style={styles.conditionalText}>
+            {sequence.length === 0
+              ? "Prepare"
+              : hasReachedEnd
+              ? "Great Work!"
+              : sequence[trackerIndex].name}
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -126,6 +138,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  workoutContainer: {
+    backgroundColor: "#fff",
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   title: {
     fontSize: 20,

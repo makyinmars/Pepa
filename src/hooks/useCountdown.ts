@@ -15,7 +15,7 @@ export function useCountdown(index: number, initialCountdown: number = -1) {
         setCountdown((count) => {
           return count - 1;
         });
-      }, 10);
+      }, 1000);
     }
 
     return cleanup;
