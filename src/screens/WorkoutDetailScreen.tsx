@@ -85,7 +85,7 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
         )}
         {sequence.length > 0 && countdown >= 0 && (
           <View>
-            <Text>{countdown}</Text>
+            <Text style={styles.countdown}>{countdown}</Text>
           </View>
         )}
       </View>
@@ -110,5 +110,9 @@ const styles = StyleSheet.create({
   },
   playIcon: {
     alignItems: "center",
+  },
+  countdown: {
+    fontFamily: "notosans-bold",
+    fontSize: 30,
   },
 });
