@@ -13,7 +13,7 @@ export function useCountdown(index: number, initialCountdown: number) {
       setCountDown((count) => {
         return count - 1;
       });
-    }, 50);
+    }, 1000);
 
     return cleanup;
   }, [index]);

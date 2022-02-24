@@ -83,6 +83,11 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
             onPress={() => addItemToSequence(0)}
           />
         )}
+        {sequence.length > 0 && countdown >= 0 && (
+          <View>
+            <Text>{countdown}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
