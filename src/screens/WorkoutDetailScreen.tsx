@@ -25,16 +25,11 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   const [sequence, setSequence] = useState<SequenceItem[]>([]);
   const [trackerIndex, setTrackerIndex] = useState<number>(-1);
 
-  const countdown = useCountdown(
-    trackerIndex,
-    trackerIndex >= 0 ? sequence[trackerIndex].duration : -1
-  );
+  const { countdown, start } = useCountdown(trackerIndex);
 
   useEffect(() => {
-    console.log(countdown);
     if (!workout) return;
     if (trackerIndex === workout.sequence.length - 1) return;
-
     if (countdown === 0) {
       addItemToSequence(trackerIndex + 1);
     }
@@ -43,8 +38,10 @@ export default function WorkoutDetailScreen({ route }: Navigation) {
   const workout = useWorkoutBySlug(route.params.slug);
 
   const addItemToSequence = (index: number) => {
-    setSequence([...sequence, workout!.sequence[index]]);
+    const newSequence = [...sequence, workout!.sequence[index]];
+    setSequence(newSequence);
     setTrackerIndex(index);
+    start(newSequence[index].duration);
   };
 
   if (!workout) {
@@ -125,10 +122,10 @@ const styles = StyleSheet.create({
   },
   countdown: {
     fontFamily: "notosans-bold",
-    fontSize: 30,
+    fontSize: 25,
   },
   conditionalText: {
-    fontFamily: "notosans",
+    fontFamily: "notosans-bold",
     fontSize: 20,
     textAlign: "center",
     marginTop: 10,
