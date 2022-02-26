@@ -1,5 +1,6 @@
-import { useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
+
 import PressableText from "./styled/PressableText";
 
 export type ExerciseForm = {
@@ -7,37 +8,60 @@ export type ExerciseForm = {
   duration: string;
 };
 
-type WorkoutProps = {
-  onSubmit: (form: ExerciseForm) => void;
-};
+export default function WorkoutForm() {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ExerciseForm>();
 
-export default function WorkoutForm({ onSubmit }: WorkoutProps) {
-  const [form, setForm] = useState<ExerciseForm>({
-    name: "",
-    duration: "",
-  });
+  console.log(errors.name && errors.name.message);
 
-  const onChangeText = (name: string) => (text: string) => {
-    setForm({ ...form, [name]: text });
+  const onSubmit: SubmitHandler<ExerciseForm> = (data) => {
+    alert(JSON.stringify(data));
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Exercise Form</Text>
       <View>
-        <TextInput
-          onChangeText={onChangeText("name")}
-          style={styles.input}
-          value={form.name}
-          placeholder="Name"
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          name="name"
+          render={({ field: { onChange, value, onBlur } }) => (
+            <TextInput
+              style={styles.input}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+            />
+          )}
         />
-        <TextInput
-          onChangeText={onChangeText("duration")}
-          style={styles.input}
-          value={form.duration}
-          placeholder="Duration"
+        {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+            />
+          )}
+          name="duration"
         />
-        <PressableText text="Submit" onPress={() => onSubmit(form)} />
+        {errors.duration && (
+          <Text style={styles.error}>{errors.duration.message}</Text>
+        )}
+
+        <PressableText text="Submit" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
   );
@@ -63,5 +87,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "gray",
     borderRadius: 8,
+  },
+  error: {
+    color: "red",
   },
 });
