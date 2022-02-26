@@ -8,18 +8,16 @@ export type ExerciseForm = {
   duration: string;
 };
 
-export default function WorkoutForm() {
+type WorkoutFormProps = {
+  onSubmit: (form: ExerciseForm) => void;
+};
+
+export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<ExerciseForm>();
-
-  console.log(errors.name && errors.name.message);
-
-  const onSubmit: SubmitHandler<ExerciseForm> = (data) => {
-    alert(JSON.stringify(data));
-  };
 
   return (
     <View style={styles.container}>
@@ -40,7 +38,9 @@ export default function WorkoutForm() {
             />
           )}
         />
-        {errors.name && <Text style={styles.error}>{errors.name.message}</Text>}
+        {errors.name && (
+          <Text style={styles.error}>This field is required!</Text>
+        )}
 
         <Controller
           control={control}
@@ -58,7 +58,7 @@ export default function WorkoutForm() {
           name="duration"
         />
         {errors.duration && (
-          <Text style={styles.error}>{errors.duration.message}</Text>
+          <Text style={styles.error}>This field is required!</Text>
         )}
 
         <PressableText text="Submit" onPress={handleSubmit(onSubmit)} />
