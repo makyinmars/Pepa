@@ -6,6 +6,8 @@ import PressableText from "./styled/PressableText";
 export type ExerciseForm = {
   name: string;
   duration: string;
+  type: string;
+  reps?: string;
 };
 
 type WorkoutFormProps = {
@@ -60,6 +62,45 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
           name="duration"
         />
         {errors.duration && (
+          <Text style={styles.error}>This field is required!</Text>
+        )}
+
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              placeholder="Repetitions"
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+            />
+          )}
+          name="reps"
+        />
+        {errors.reps && (
+          <Text style={styles.error}>This field is required!</Text>
+        )}
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              placeholder="Type"
+              onChangeText={onChange}
+              onBlur={onBlur}
+              value={value}
+            />
+          )}
+          name="type"
+        />
+        {errors.type && (
           <Text style={styles.error}>This field is required!</Text>
         )}
 
