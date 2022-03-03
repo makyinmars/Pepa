@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import PressableText from "./styled/PressableText";
 
@@ -32,6 +32,7 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
           render={({ field: { onChange, value, onBlur } }) => (
             <TextInput
               style={styles.input}
+              placeholder="Exercise Name"
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
@@ -50,6 +51,7 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={styles.input}
+              placeholder="Duration"
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
@@ -87,8 +89,11 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "gray",
     borderRadius: 8,
+    fontFamily: "notosans",
   },
   error: {
     color: "red",
+    textAlign: "center",
+    fontFamily: "notosans",
   },
 });
