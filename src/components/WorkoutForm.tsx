@@ -101,7 +101,10 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
                     <PressableText
                       key={i}
                       text={item}
-                      onPressIn={() => setIsSelectionOn(false)}
+                      onPressIn={() => {
+                        onChange(item);
+                        setIsSelectionOn(false);
+                      }}
                     />
                   ))}
                 </View>
