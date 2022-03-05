@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 import PressableText from "./styled/PressableText";
@@ -20,6 +21,7 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
     handleSubmit,
     formState: { errors },
   } = useForm<ExerciseForm>();
+  const [isSelectionOn, setIsSelectionOn] = useState<boolean>(false);
 
   return (
     <View style={styles.container}>
@@ -90,13 +92,30 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
             required: true,
           }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              placeholder="Type"
-              onChangeText={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
+            <View>
+              {isSelectionOn ? (
+                <View>
+                  <PressableText
+                    text="exercise"
+                    onPressIn={() => setIsSelectionOn(false)}
+                  />
+                  <PressableText
+                    text="break"
+                    onPressIn={() => setIsSelectionOn(false)}
+                  />
+                  <PressableText
+                    text="stretch"
+                    onPressIn={() => setIsSelectionOn(false)}
+                  />
+                </View>
+              ) : (
+                <TextInput
+                  onPressIn={() => setIsSelectionOn(true)}
+                  style={styles.input}
+                  placeholder="Type"
+                />
+              )}
+            </View>
           )}
           name="type"
         />
