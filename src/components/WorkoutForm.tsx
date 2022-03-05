@@ -15,6 +15,8 @@ type WorkoutFormProps = {
   onSubmit: (form: ExerciseForm) => void;
 };
 
+const selectionItems = ["exercise", "break", "stretch"];
+
 export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
   const {
     control,
@@ -94,24 +96,20 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
           render={({ field: { onChange, onBlur, value } }) => (
             <View>
               {isSelectionOn ? (
-                <View>
-                  <PressableText
-                    text="exercise"
-                    onPressIn={() => setIsSelectionOn(false)}
-                  />
-                  <PressableText
-                    text="break"
-                    onPressIn={() => setIsSelectionOn(false)}
-                  />
-                  <PressableText
-                    text="stretch"
-                    onPressIn={() => setIsSelectionOn(false)}
-                  />
+                <View style={styles.selectionItemContainer}>
+                  {selectionItems.map((item, i) => (
+                    <PressableText
+                      key={i}
+                      text={item}
+                      onPressIn={() => setIsSelectionOn(false)}
+                    />
+                  ))}
                 </View>
               ) : (
                 <TextInput
                   onPressIn={() => setIsSelectionOn(true)}
                   style={styles.input}
+                  value={value}
                   placeholder="Type"
                 />
               )}
@@ -155,5 +153,12 @@ const styles = StyleSheet.create({
     color: "red",
     textAlign: "center",
     fontFamily: "notosans",
+  },
+  selectionItemContainer: {
+    backgroundColor: "lightgray",
+    borderWidth: 1,
+    paddingVertical: 4,
+    marginHorizontal: 12,
+    borderRadius: 8,
   },
 });
