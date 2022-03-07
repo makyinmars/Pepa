@@ -71,9 +71,6 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
 
         <Controller
           control={control}
-          rules={{
-            required: true,
-          }}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={styles.input}
@@ -85,9 +82,6 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
           )}
           name="reps"
         />
-        {errors.reps && (
-          <Text style={styles.error}>This field is required!</Text>
-        )}
         <Controller
           control={control}
           rules={{
