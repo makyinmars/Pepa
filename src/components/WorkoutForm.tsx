@@ -1,23 +1,18 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
 import { useState } from "react";
+import { View, StyleSheet, TextInput } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-
 import PressableText from "./styled/PressableText";
 
-export type ExerciseForm = {
+export type WorkoutFormData = {
   name: string;
 };
 
-type WorkoutFormProps = {
-  onSubmit: (form: ExerciseForm) => void;
+type WorkoutProps = {
+  onSubmit: (form: WorkoutFormData) => void;
 };
 
-export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ExerciseForm>();
+export default function WorkoutForm({ onSubmit }: WorkoutProps) {
+  const { control, handleSubmit } = useForm();
 
   return (
     <View style={styles.container}>
@@ -27,18 +22,22 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
           required: true,
         }}
         name="name"
-        render={({ field: { onChange, value, onBlur } }) => (
+        render={({ field: { onChange, value } }) => (
           <TextInput
-            style={styles.input}
-            placeholder="Exercise Name"
             onChangeText={onChange}
-            onBlur={onBlur}
             value={value}
+            style={styles.input}
+            placeholder="Workout name"
           />
         )}
       />
-      {errors.name && <Text style={styles.error}>This field is required!</Text>}
-      <PressableText text="Confirm" onPress={handleSubmit(onSubmit)} />
+      <PressableText
+        style={{ marginTop: 10 }}
+        text="Confirm"
+        onPress={handleSubmit((data) => {
+          onSubmit(data as WorkoutFormData);
+        })}
+      />
     </View>
   );
 }
@@ -46,23 +45,16 @@ export default function WorkoutForm({ onSubmit }: WorkoutFormProps) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    borderColor: "gray",
-    borderWidth: 1,
-    borderRadius: 8,
+    borderRadius: 10,
     padding: 10,
   },
   input: {
-    height: 40,
-    margin: 12,
+    width: 200,
+    margin: 2,
     borderWidth: 1,
-    padding: 10,
-    borderColor: "gray",
-    borderRadius: 8,
-    fontFamily: "notosans",
-  },
-  error: {
-    color: "red",
-    textAlign: "center",
-    fontFamily: "notosans",
+    height: 30,
+    padding: 5,
+    borderRadius: 5,
+    borderColor: "rgba(0,0,0, 0.4)",
   },
 });
