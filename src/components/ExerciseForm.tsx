@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 
 import PressableText from "./styled/PressableText";
 
-export type ExerciseFormData = {
+export type ExerciseFormType = {
   name: string;
   duration: string;
   type: string;
@@ -12,7 +12,7 @@ export type ExerciseFormData = {
 };
 
 type WorkoutFormProps = {
-  onSubmit: (form: ExerciseFormData) => void;
+  onSubmit: (form: ExerciseFormType) => void;
 };
 
 const selectionItems = ["exercise", "break", "stretch"];
@@ -22,12 +22,11 @@ export default function ExerciseForm({ onSubmit }: WorkoutFormProps) {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ExerciseFormData>();
+  } = useForm<ExerciseFormType>();
   const [isSelectionOn, setIsSelectionOn] = useState<boolean>(false);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Exercise Form</Text>
       <View>
         <Controller
           control={control}
@@ -118,7 +117,7 @@ export default function ExerciseForm({ onSubmit }: WorkoutFormProps) {
           <Text style={styles.error}>This field is required!</Text>
         )}
 
-        <PressableText text="Submit" onPress={handleSubmit(onSubmit)} />
+        <PressableText text="Add Exercise" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
   );
